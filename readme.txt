@@ -5,7 +5,7 @@
 User Guide
 ========== 
   
-  This is a C/C++ ut/it/st sample project, using testngpp,mockcpp and cmake. You can use this project following these steps.
+  This is a C/C++ ut/it/st sample project, using testngpp,mockcpp and cmake. It aims at making C/C++ test harmless and full of fun. With it, you can add file/tests easily, can compile and run in only one script. You can use this project following these steps.
 
 1 Compile testngpp and mockcpp, put the installed files in tools, see also the structure of dir.
 
