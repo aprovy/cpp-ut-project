@@ -22,16 +22,16 @@ function build($build_dir, $src_dir) {
 	ls *.sln -name | vcbuild
 }
 
-build .\project ..
+build ..\project ..\UserModule
 
-cd ..
+cd ..\UserModule
 
 #---------------------------------
 # run all tests
-cd project\test\Debug
+cd ..\project\test\Debug
 cp ..\..\..\tools\testngpp\testngpp\listener\testngppstdoutlistener.dll .
 $ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "testngppstdoutlistener"}
 ..\..\..\tools\testngpp\bin\testngpp-runner.exe $ALL_DLL -L"..\..\..\tools\testngpp\testngpp\listener" -l"testngppstdoutlistener -c -f" 
-cd ..\..\..
+cd ..\..\..\UserModule
 
 

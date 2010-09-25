@@ -1,5 +1,5 @@
 
-SET(MODULE_NAME module_name)
+SET(MODULE_NAME UserModule)
 SET(PACKAGE_NAME \"${MODULE_NAME}\")
 SET(PACKAGE_STRING \"${MODULE_NAME}\")
 SET(PACKAGE_BUGREPORT \"sinojelly@gmail.com\")

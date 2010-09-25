@@ -1,8 +1,8 @@
-﻿#include <testngpp/testngpp.hpp>
+#include <testngpp/testngpp.hpp>
 #include <mockcpp/mokc.h>
 #include <mem_checker/interface_4user.h>
 
-#include <module_name/HelloWorld.h>
+#include <UserModule/HelloWorld.h>
 
 FIXTURE(HelloWorld, base test)
 {

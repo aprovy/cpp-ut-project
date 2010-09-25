@@ -27,19 +27,19 @@ SET(UT_CASES
 
 
 LINK_DIRECTORIES(
-  ${PROJECT_SOURCE_DIR}/project/src/Debug
-  ${PROJECT_SOURCE_DIR}/tools/mockcpp/lib
-  ${PROJECT_SOURCE_DIR}/tools/testngpp/lib
+  ${PROJECT_SOURCE_DIR}/../project/src/Debug
+  ${PROJECT_SOURCE_DIR}/../tools/mockcpp/lib
+  ${PROJECT_SOURCE_DIR}/../tools/testngpp/lib
   )
 
 INCLUDE_DIRECTORIES(BEFORE 
   ${PROJECT_SOURCE_DIR}/include
-  ${PROJECT_SOURCE_DIR}/tools/3rdparty
-  ${PROJECT_SOURCE_DIR}/tools/mockcpp/include
-  ${PROJECT_SOURCE_DIR}/tools/testngpp/include
+  ${PROJECT_SOURCE_DIR}/../tools/3rdparty
+  ${PROJECT_SOURCE_DIR}/../tools/mockcpp/include
+  ${PROJECT_SOURCE_DIR}/../tools/testngpp/include
   )
 
-SET(TEST_GENERATOR ${PROJECT_SOURCE_DIR}/tools/testngpp/testngpp/generator/testngppgen.pyc)
+SET(TEST_GENERATOR ${PROJECT_SOURCE_DIR}/../tools/testngpp/testngpp/generator/testngppgen.pyc)
 SET(TESTCASE_PREFIX testngpp)
 
 FOREACH(CASE ${UT_CASES})

@@ -1,7 +1,7 @@
-﻿#include <testngpp/testngpp.hpp>
+#include <testngpp/testngpp.hpp>
 #include <mockcpp/mockcpp.hpp>
 
-#include <module_name/HelloWorld.h>
+#include <UserModule/HelloWorld.h>
 
 FIXTURE(HelloWorld, base test)
 {
