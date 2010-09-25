@@ -21,9 +21,9 @@ ADD_DEFINITIONS(-DMSVC_VMG_ENABLED /vmg)
 ENDIF(MSVC)
 
 SET(UT_CASES
-  UT_HelloWorld.h
-  IT_HelloWorld.h
-)
+	UT_HelloWorld.h
+	IT_HelloWorld.h
+	)
 
 
 LINK_DIRECTORIES(
