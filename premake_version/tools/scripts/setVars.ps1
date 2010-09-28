@@ -1,0 +1,1 @@
+$env:HEADER_DIR=$env:MODULE_DIR+"\include\"+$env:MODULE_NAME$env:SRC_DIR="$env:MODULE_DIR\src"$env:TEST_DIR="$env:MODULE_DIR\test"
