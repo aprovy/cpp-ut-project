@@ -16,8 +16,12 @@ solution (string.format("%s", module_name))
 	  objdir (string.format("../project/obj/%s", module_name))
  
    project (string.format("Test%s", module_name))
+      -- ===========================================
+	  -- make test cpp file dir.
       local test_dir = "../project/test"
       os.mkdir(test_dir)  -- or else, generate .cpp failure.
+	  -- ===========================================
+	  -- generate cpp file for each test .h file, and register it as prebuildcommand.
 	  local test_hfiles = os.matchfiles("test/**.h")
 	  local test_files = ""
 	  for _, v in ipairs(test_hfiles) do		
@@ -27,7 +31,10 @@ solution (string.format("%s", module_name))
 	  local file_encode = "-e gb2312"
 	  local cpp_generated = "-d ../project/test"	  
 	  local cmd_line = string.format("%s %s %s %s", test_generator, file_encode, cpp_generated, test_files)
-	  os.executef(cmd_line) -- generate .cpp file in order to include it in vcproj.
+	  os.executef(cmd_line) -- generate .cpp file at the first running, in order to include it in vcproj.
+	  prebuildcommands { cmd_line }
+	  -- ===========================================
+	  -- project configuration
       kind "SharedLib"
       files {"../project/test/**.cpp", "test/**.h"}
 	  local dll_dir = "../project/dll"
@@ -41,10 +48,9 @@ solution (string.format("%s", module_name))
 	  defines { "WIN32", "_WINDOWS", "_DEBUG" }
 	  linkoptions { "/DEBUG"}	  
 	  flags { "Symbols", "NoManifest" }
-	  objdir (string.format("../project/obj/Test%s", module_name))
-	  prebuildcommands { cmd_line }
+	  objdir (string.format("../project/obj/Test%s", module_name))	  
 	  -- ===========================================
-	  -- run test dll
+	  -- run test dlls
 	  --local testngpp_runner = "../tools/testngpp/bin/testngpp-runner.exe"
 	  local testngpp_runner = "..\\tools\\testngpp\\bin\\testngpp-runner.exe"  -- windows
 	  local test_dll_list = os.matchfiles(dll_dir.."/**.dll")
