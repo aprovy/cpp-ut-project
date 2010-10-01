@@ -27,7 +27,8 @@ solution (string.format("%s", module_name))
 	  for _, v in ipairs(test_hfiles) do		
 		test_files = test_files..string.format("../%s/%s ", module_name, v)
 	  end
-	  local test_generator = "python.exe ../tools/testngpp/testngpp/generator/testngppgen.pyc"
+	  -- local test_generator = "python.exe ../tools/testngpp/testngpp/generator/testngppgen.pyc"
+	  local test_generator = "..\\tools\\testngpp\\bin\\testngppgen.exe"
 	  local file_encode = "-e gb2312"
 	  local cpp_generated = "-d ../project/test"	  
 	  local cmd_line = string.format("%s %s %s %s", test_generator, file_encode, cpp_generated, test_files)
