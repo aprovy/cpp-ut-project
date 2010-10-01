@@ -27,11 +27,13 @@ solution (string.format("%s", module_name))
 	  local file_encode = "-e gb2312"
 	  local cpp_generated = "-d ../project/test"	  
 	  local cmd_line = string.format("%s %s %s %s", test_generator, file_encode, cpp_generated, test_files)
-	  os.executef(cmd_line)
+	  os.executef(cmd_line) -- generate .cpp file in order to include it in vcproj.
       kind "SharedLib"
       files {"../project/test/**.cpp", "test/**.h"}
+	  local dll_dir = "../project/dll"
 	  targetdir ("../project/dll")
-	  targetname (string.format("Test%s", module_name))
+	  local dll_name = string.format("Test%s", module_name)
+	  targetname (dll_name)
 	  links { module_name, "testngpp", "mockcpp" }	  
 	  includedirs { "include", "../tools/testngpp/include", "../tools/mockcpp/include", "../tools/3rdparty"}
 	  libdirs { "../project/lib", "../tools/testngpp/lib", "../tools/mockcpp/lib"}
@@ -41,5 +43,20 @@ solution (string.format("%s", module_name))
 	  flags { "Symbols", "NoManifest" }
 	  objdir (string.format("../project/obj/Test%s", module_name))
 	  prebuildcommands { cmd_line }
+	  -- ===========================================
+	  -- run test dll
+	  --local testngpp_runner = "../tools/testngpp/bin/testngpp-runner.exe"
+	  local testngpp_runner = "..\\tools\\testngpp\\bin\\testngpp-runner.exe"  -- windows
+	  local test_dll_list = os.matchfiles(dll_dir.."/**.dll")
+	  local test_dlls = ""
+	  for _, v in ipairs(test_dll_list) do		
+		test_dlls = test_dlls..string.sub(v, 1, -5).." "
+	  end
+	  if test_dlls == "" then test_dlls = dll_dir.."/"..dll_name end   -- at first time, dll not exist, generate correct cmd line
+	  local listener_dirs = '-L"../tools/testngpp/testngpp/listener"'
+	  local listeners = '-l"testngppstdoutlistener -c -v"'
+	  local test_options = "" --  -s
+	  local run_tests = string.format("%s %s %s %s %s", testngpp_runner, test_dlls, listener_dirs, listeners, test_options)
+	  postbuildcommands { run_tests }
 	  
 	  
