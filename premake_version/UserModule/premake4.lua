@@ -1,4 +1,5 @@
 --usage: in the command line , run the cmd: premake4 vs2005, and then use the .sln and .vcproj in ../project dir.
+--       after adding .h/.cpp or tests, rerun the cmd premake4 vs2005, it will generate new .sln .vcproj including new files.
 
 module_name = "UserModule"
 
@@ -15,6 +16,18 @@ solution (string.format("%s", module_name))
 	  objdir (string.format("../project/obj/%s", module_name))
  
    project (string.format("Test%s", module_name))
+      local test_dir = "../project/test"
+      os.mkdir(test_dir)  -- or else, generate .cpp failure.
+	  local test_hfiles = os.matchfiles("test/**.h")
+	  local test_files = ""
+	  for _, v in ipairs(test_hfiles) do		
+		test_files = test_files..string.format("../%s/%s ", module_name, v)
+	  end
+	  local test_generator = "python.exe ../tools/testngpp/testngpp/generator/testngppgen.pyc"
+	  local file_encode = "-e gb2312"
+	  local cpp_generated = "-d ../project/test"	  
+	  local cmd_line = string.format("%s %s %s %s", test_generator, file_encode, cpp_generated, test_files)
+	  os.executef(cmd_line)
       kind "SharedLib"
       files {"../project/test/**.cpp", "test/**.h"}
 	  targetdir ("../project/dll")
@@ -27,14 +40,6 @@ solution (string.format("%s", module_name))
 	  linkoptions { "/DEBUG"}	  
 	  flags { "Symbols", "NoManifest" }
 	  objdir (string.format("../project/obj/Test%s", module_name))
-	  -- TODO: how to detect UT_*.h automaticly?
-	  --prebuildcommands { "python.exe ../tools/testngpp/testngpp/generator/testngppgen.pyc -e gb2312 -o ../project/test/AutoGenerator.cpp test/UT_HelloWorld.h test/IT_HelloWorld.h" }
-	  os.mkdir("../project/test")  -- or else, generate .cpp failure.
-	  local test_generator = "../tools/testngpp/testngpp/generator/testngppgen.pyc"
-	  local file_encode = "-e gb2312"
-	  local cpp_generated = "-o ../project/test/AutoGenerator.cpp"
-	  local test_file = string.format("../%s/test/UT_HelloWorld.h ../%s/test/IT_HelloWorld.h", module_name, module_name)
-	  local cmd_line = string.format("python.exe %s %s %s %s", test_generator, file_encode, cpp_generated, test_file)	  
 	  prebuildcommands { cmd_line }
 	  
 	  
