@@ -1,0 +1,10 @@
+syntax: regexp
+^cmake_version/tools/3rdparty/
+^cmake_version/tools/mockcpp/
+^cmake_version/tools/testngpp/
+^cmake_version/project/
+\.rar$
+^premake_version/tools/3rdparty/
+^premake_version/tools/mockcpp/
+^premake_version/tools/testngpp/
+^premake_version/build/
