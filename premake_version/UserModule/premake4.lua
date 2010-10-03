@@ -10,6 +10,9 @@
 local module_name = "UserModule"
 
 
+if not _ACTION then return end
+
+
 local build_dir   = "../build/".._ACTION
 local test_dir    = build_dir.."/test"
 local target_dir  = build_dir.."/target"
