@@ -85,6 +85,7 @@ local target_name = "Test"..module_name
       location (build_dir)
  
    project (module_name)
+      location (build_dir)
       kind "StaticLib"
       files {"src/**.cpp", "include/"..module_name.."/**.h"}  
 	  targetdir (lib_dir)
@@ -92,6 +93,7 @@ local target_name = "Test"..module_name
 	  objdir (obj_dir.."/"..module_name)
  
    project ("Test"..module_name)
+      location (build_dir)
 	  -- ===========================================
 	  -- generate cpp file for each test .h file, and register it as prebuildcommand.
 	  prebuildcommands { generate_tests() }
