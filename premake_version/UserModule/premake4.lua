@@ -108,7 +108,7 @@ local target_name = "Test"..module_name
 	  -- ===========================================
 	  -- project configuration
       kind "SharedLib"
-      files {test_dir.."/**.cpp", "test/**.h"}
+      files {test_dir.."/**.cpp", test_dir.."/**.cxx", "test/**.h"}
 	  targetdir (target_dir)
 	  targetname (target_name)
 	  links { module_name, "testngpp", "mockcpp" }	  
