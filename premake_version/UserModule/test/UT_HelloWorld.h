@@ -29,4 +29,27 @@ FIXTURE(HelloWorld, base test)
         GlobalMockObject::verify();
         GlobalMockObject::reset();
 	}
+
+    // @test(id = parent1)
+    TEST(±ª“¿¿µ1)
+    {
+
+    }
+    
+    // @test(id = parent2-test)
+    TEST(±ª“¿¿µ2)
+    {
+
+    }
+
+    // @test(depends=parent1)
+    TEST(“¿¿µ1)
+    {
+
+    }
+
+    // @test(depends=parent2-test)
+    TEST(“¿¿µ2)
+    {
+    }
 };

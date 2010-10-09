@@ -117,9 +117,9 @@ local target_name = "Test"..module_name
 	  -- configuration for special platform
 	  configuration {"windows"}
 	    buildoptions { "/Zm1000", "/vmg", "/MDd" }
-	    defines { "WIN32", "_WINDOWS", "_DEBUG" }
+	    defines { "WIN32", "_WINDOWS", "_DEBUG", "MSVC_VMG_ENABLED"}
 	    linkoptions { "/DEBUG"}	  
-	    flags { "Symbols", "NoManifest" }
+	    flags { "Symbols" } --  "NoManifest" may cause exception
       	  
 	  configuration {"linux", "debug"}
 	    buildoptions { "-g", "-ggdb" }
