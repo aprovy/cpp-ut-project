@@ -84,6 +84,9 @@ local target_name = "Test"..module_name
       language "C++"
       location (build_dir)
  
+   configuration {"linux", "debug"}
+	  buildoptions { "-g", "-ggdb" }
+ 
    project (module_name)
       location (build_dir)
       kind "StaticLib"
@@ -91,6 +94,10 @@ local target_name = "Test"..module_name
 	  targetdir (lib_dir)
 	  includedirs { "include" }
 	  objdir (obj_dir.."/"..module_name)
+	  
+	  configuration {"windows"}
+	    buildoptions { "/MDd" }
+		flags { "Symbols" }
  
    project ("Test"..module_name)
       location (build_dir)
@@ -119,10 +126,9 @@ local target_name = "Test"..module_name
 	    buildoptions { "/Zm1000", "/vmg", "/MDd" }
 	    defines { "WIN32", "_WINDOWS", "_DEBUG", "MSVC_VMG_ENABLED"}
 	    linkoptions { "/DEBUG"}	  
-	    flags { "Symbols" } --  "NoManifest" may cause exception
+	    flags { "Symbols", "NoManifest" } 
       	  
-	  configuration {"linux", "debug"}
-	    buildoptions { "-g", "-ggdb" }
+
 	  
 
    
