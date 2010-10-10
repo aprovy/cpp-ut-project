@@ -83,9 +83,7 @@ local target_name = "Test"..module_name
       configurations { "Debug", "Release" }
       language "C++"
       location (build_dir)
- 
-   configuration {"linux", "debug"}
-	  buildoptions { "-g", "-ggdb" }
+	  flags { "Symbols" }
  
    project (module_name)
       location (build_dir)
@@ -97,7 +95,6 @@ local target_name = "Test"..module_name
 	  
 	  configuration {"windows"}
 	    buildoptions { "/MDd" }
-		flags { "Symbols" }
  
    project ("Test"..module_name)
       location (build_dir)
@@ -126,7 +123,7 @@ local target_name = "Test"..module_name
 	    buildoptions { "/Zm1000", "/vmg", "/MDd" }
 	    defines { "WIN32", "_WINDOWS", "_DEBUG", "MSVC_VMG_ENABLED"}
 	    linkoptions { "/DEBUG"}	  
-	    flags { "Symbols", "NoManifest" } 
+	    flags { "NoManifest" } 
       	  
 
 	  
