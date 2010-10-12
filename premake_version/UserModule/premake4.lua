@@ -42,6 +42,7 @@ local target_name = "Test"..module_name
 	  local cpp_generated = "-d ../"..test_dir.." "	  
 	  local cpp_generated_run = "-d "..test_dir.." "	  
 	  os.executef(test_generator_run..file_encode..cpp_generated_run..test_files_run) -- generate .cpp file at the first running, in order to include it in vcproj.
+	  os.execute("sleep 3") -- wait until generate tests finish!
 	  return test_generator..file_encode..cpp_generated..test_files
    end
    
