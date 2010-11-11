@@ -23,6 +23,7 @@ librarys_dirs   = {}
 src_files_dirs  = {"src"}
 test_files_dirs = {"test"}
 
+cwd = os.getcwd()
 dofile("../tools/scripts/premake-testngpp.lua")
 
    

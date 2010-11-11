@@ -10,7 +10,9 @@
 
 if not _ACTION then return end
 
-local path_offset = "../../"..module_name.."/"  -- because the path is relative to this premake-testngpp.lua path
+print("Generate test files ...")
+
+local path_offset = path.getrelative(os.getcwd(), cwd).."/"  -- because the processed file path is relative to this premake-testngpp.lua path
 
 function modify_path(path)
 	for i,val in ipairs(path) do
