@@ -5,20 +5,31 @@
 --             premake4 gmake     and then : make
 --             premake4 gmake     and then : make config=debug
 --
+-- note: put some print("something") can debug this script.
+--
+
+--
+-- define user's parameters, all the paths are relative to premake4.lua dir.
+--
 
 -- change the module name by yourself
-local module_name = "UserModule"
-local tool_dir    = "../tools"
+local module_name     = "UserModule"
+local tool_dir        = "../tools"
 
-local include_dir = ""
-local library = ""
-local library_dir = ""
+-- define the user's include dir and librarys. (replace nil with {"something", "otherthing"})
+local include_dirs    = {"include"}
+local librarys        = nil
+local librarys_dirs   = {}
 
--- dofile("scripts/embed.lua")
+-- define .cpp/test files search path (it will search recursively)
+local src_files_dirs  = {"src"}
+local test_files_dirs = {"test"}
+
+-- dofile("scripts/.lua")
 
 if not _ACTION then return end
 
-local tool_dir_win = string.gsub(tool_dir, "/", "\\\\")
+local tool_dir_win = string.gsub(tool_dir, "/", "\\")
 local build_dir   = "../build/".._ACTION
 local test_dir    = build_dir.."/test"
 local target_dir  = build_dir.."/target"
@@ -26,18 +37,38 @@ local lib_dir     = build_dir.."/lib"
 local obj_dir     = build_dir.."/obj"
 local target_name = "Test"..module_name
 
-
-   --
-   -- generate cpp file for each test .h file.
-   --
-   function generate_tests()  
-	  local test_hfiles = os.matchfiles("test/**.h")
+	function get_one_dir_tests(dir, files)
+	  local test_hfiles = os.matchfiles(dir.."/"..files)
 	  local test_files = ""
 	  local test_files_run = ""
 	  for _, v in ipairs(test_hfiles) do		
 		test_files = test_files..string.format("../../%s/%s ", module_name, v)
 		test_files_run = test_files_run..string.format("../%s/%s ", module_name, v)  -- current run dir is different from the .vcproj dir
 	  end
+	  return test_files, test_files_run
+	end
+
+    function get_tests(dir_list, files)
+		local test_files = ""
+		local test_files_run = ""
+		local test_files_temp = ""
+		local test_files_run_temp = ""
+		for _, v in ipairs(dir_list) do
+			test_files_temp, test_files_run_temp = get_one_dir_tests(v, files)
+			test_files = test_files..test_files_temp
+			test_files_run = test_files_run..test_files_run_temp			
+		end		
+		return test_files, test_files_run
+	end
+	
+   --
+   -- generate cpp file for each test .h file.
+   --
+   function generate_tests()  
+	  local test_files = ""
+	  local test_files_run = ""
+	  test_files, test_files_run = get_tests(test_files_dirs, "**.h")
+	  
 	  local test_generator = "python ../"..tool_dir.."/testngpp/testngpp/generator/testngppgen.pyc "
 	  local test_generator_run = "python  "..tool_dir.."/testngpp/testngpp/generator/testngppgen.pyc "
 	  if os.is("windows") then 
@@ -85,6 +116,22 @@ local target_name = "Test"..module_name
 	  local run_tests = string.format("%s %s %s %s %s", testngpp_runner, test_dlls, listener_dirs, listeners, test_options)
 	  return run_tests
    end
+   
+    function get_paths(dir_list, files)
+		if dir_list == nil then
+			return ""
+		end
+		
+		local paths = ""		
+		for _, v in ipairs(dir_list) do
+			paths = paths..string.format ("%s", v)
+			if files ~= "" then
+				paths = paths..string.format ("/%s", files)
+			end
+				paths = paths..string.format (",")
+			end
+		return string.sub(paths, 1, -2)  -- remove the last ","
+	end
 
    solution (module_name)
       configurations { "Debug", "Release" }
@@ -95,9 +142,9 @@ local target_name = "Test"..module_name
    project (module_name)
       location (build_dir)
       kind "StaticLib"
-      files {"src/**.cpp", "include/"..module_name.."/**.h"}  
+      files { get_paths(src_files_dirs, "**.cpp"), get_paths(include_dirs, "**.h")}  
 	  targetdir (lib_dir)
-	  includedirs { "include" }
+	  includedirs { get_paths(include_dirs, "") }
 	  objdir (obj_dir.."/"..module_name)
 	  
 	  configuration {"windows"}
@@ -112,11 +159,12 @@ local target_name = "Test"..module_name
 	  -- ===========================================
 	  -- project configuration
       kind "SharedLib"
-      files {test_dir.."/**.cpp", test_dir.."/**.cxx", "test/**.h"}
+      files {test_dir.."/**.cpp", test_dir.."/**.cxx", get_paths(test_files_dirs, "**.h")}
 	  targetdir (target_dir)
 	  targetname (target_name)
 	  links { module_name, "testngpp", "mockcpp" }	  
-	  includedirs { "include", tool_dir.."/testngpp/include", tool_dir.."/mockcpp/include", tool_dir.."/3rdparty"}
+	  if librarys ~= nil then links {get_paths(librarys, "")} end  -- or else can not link no name ".lib"
+	  includedirs { tool_dir.."/testngpp/include", tool_dir.."/mockcpp/include", tool_dir.."/3rdparty", get_paths(include_dirs, "") }
 	  libdirs { lib_dir, tool_dir.."/testngpp/lib", tool_dir.."/mockcpp/lib" }
 	  objdir (obj_dir.."/Test"..module_name)	  
 	  
