@@ -35,27 +35,20 @@ local target_name = "Test"..module_name
 	function get_one_dir_tests(dir, files)
 	  local test_hfiles = os.matchfiles(dir.."/"..files)
 	  local test_files = ""
-	  local test_files_run = ""
 	  for _, v in ipairs(test_hfiles) do		
-		--test_files = test_files..string.format("../../%s/%s ", module_name, v)
-		--test_files_run = test_files_run..string.format("../%s/%s ", module_name, v)  -- current run dir is different from the .vcproj dir
 		test_files = test_files..string.format("%s ", v)
 	  end
-	  --return test_files, test_files_run
-	  return test_files, test_files
+	  return test_files
 	end
 
     function get_tests(dir_list, files)
 		local test_files = ""
-		local test_files_run = ""
 		local test_files_temp = ""
-		local test_files_run_temp = ""
 		for _, v in ipairs(dir_list) do
-			test_files_temp, test_files_run_temp = get_one_dir_tests(v, files)
+			test_files_temp = get_one_dir_tests(v, files)
 			test_files = test_files..test_files_temp
-			test_files_run = test_files_run..test_files_run_temp			
 		end		
-		return test_files, test_files_run
+		return test_files
 	end
 	
    --
@@ -63,22 +56,18 @@ local target_name = "Test"..module_name
    --
    function generate_tests()  
 	  local test_files = ""
-	  local test_files_run = ""
-	  test_files, test_files_run = get_tests(test_files_dirs, "**.h")
+	  test_files = get_tests(test_files_dirs, "**.h")
 	  
-	  local test_generator = "python ../"..tool_dir.."/testngpp/testngpp/generator/testngppgen.pyc "
-	  local test_generator_run = "python  "..tool_dir.."/testngpp/testngpp/generator/testngppgen.pyc "
+	  local test_generator = "python "..tool_dir.."/testngpp/testngpp/generator/testngppgen.pyc "
 	  if os.is("windows") then 
-	    test_generator = "..\\"..tool_dir_win.."\\testngpp\\bin\\testngppgen.exe "
-		test_generator_run = tool_dir_win.."\\testngpp\\bin\\testngppgen.exe "
+	    test_generator = tool_dir_win.."\\testngpp\\bin\\testngppgen.exe "
 	  end
 	  local file_encode = "-e gb2312 "
-	  local cpp_generated = "-d ../"..test_dir.." "	  
-	  local cpp_generated_run = "-d "..test_dir.." "	  
-	  os.executef(test_generator_run..file_encode..cpp_generated_run..test_files_run) -- generate .cpp file at the first running, in order to include it in vcproj.
+	  local cpp_generated = "-d "..test_dir.." "	  
+	  local cmdline = test_generator..file_encode..cpp_generated..test_files
+	  os.executef(cmdline) -- generate .cpp file at the first running, in order to include it in vcproj.
 	  os.execute("sleep 3") -- wait until generate tests finish!
-	  test_generator = test_generator_run   -- when remove to tools/script, they are the same.
-	  return test_generator..file_encode..cpp_generated..test_files
+	  return cmdline  -- when remove to tools/script, they are the same.
    end
    
    --
