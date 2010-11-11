@@ -8,13 +8,17 @@
 
 -- change the module name by yourself
 local module_name = "UserModule"
+local tool_dir    = "../tools"
 
+local include_dir = ""
+local library = ""
+local library_dir = ""
+
+-- dofile("scripts/embed.lua")
 
 if not _ACTION then return end
 
-
-local tool_dir    = "../tools"
-local tool_dir_win = "..\\tools"
+local tool_dir_win = string.gsub(tool_dir, "/", "\\\\")
 local build_dir   = "../build/".._ACTION
 local test_dir    = build_dir.."/test"
 local target_dir  = build_dir.."/target"
