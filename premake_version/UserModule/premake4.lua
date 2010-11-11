@@ -13,6 +13,8 @@ local module_name = "UserModule"
 if not _ACTION then return end
 
 
+local tool_dir    = "../tools"
+local tool_dir_win = "..\\tools"
 local build_dir   = "../build/".._ACTION
 local test_dir    = build_dir.."/test"
 local target_dir  = build_dir.."/target"
@@ -32,11 +34,11 @@ local target_name = "Test"..module_name
 		test_files = test_files..string.format("../../%s/%s ", module_name, v)
 		test_files_run = test_files_run..string.format("../%s/%s ", module_name, v)  -- current run dir is different from the .vcproj dir
 	  end
-	  local test_generator = "python ../../tools/testngpp/testngpp/generator/testngppgen.pyc "
-	  local test_generator_run = "python ../tools/testngpp/testngpp/generator/testngppgen.pyc "
+	  local test_generator = "python ../"..tool_dir.."/testngpp/testngpp/generator/testngppgen.pyc "
+	  local test_generator_run = "python  "..tool_dir.."/testngpp/testngpp/generator/testngppgen.pyc "
 	  if os.is("windows") then 
-	    test_generator = "..\\..\\tools\\testngpp\\bin\\testngppgen.exe "
-		test_generator_run = "..\\tools\\testngpp\\bin\\testngppgen.exe "
+	    test_generator = "..\\"..tool_dir_win.."\\testngpp\\bin\\testngppgen.exe "
+		test_generator_run = tool_dir_win.."\\testngpp\\bin\\testngppgen.exe "
 	  end
 	  local file_encode = "-e gb2312 "
 	  local cpp_generated = "-d ../"..test_dir.." "	  
@@ -50,9 +52,9 @@ local target_name = "Test"..module_name
    -- construct run tests command.
    --
    function run_tests()
-   	  local testngpp_runner = "../../tools/testngpp/bin/testngpp-runner"
+   	  local testngpp_runner = "../"..tool_dir.."/testngpp/bin/testngpp-runner"
 	  if os.is("windows") then 
-	    testngpp_runner = "..\\..\\tools\\testngpp\\bin\\testngpp-runner.exe" 
+	    testngpp_runner = "..\\"..tool_dir_win.."\\testngpp\\bin\\testngpp-runner.exe" 
 	  end
 	  local test_dll_list = os.matchfiles("../"..target_dir.."/**.so")
       if os.is("windows") then
@@ -73,7 +75,7 @@ local target_name = "Test"..module_name
 	      test_dlls = "../"..target_dir.."/lib"..target_name   
 	    end
 	  end
-	  local listener_dirs = '-L"../../tools/testngpp/testngpp/listener"'
+	  local listener_dirs = '-L"../'..tool_dir..'/testngpp/testngpp/listener"'
 	  local listeners = '-l"testngppstdoutlistener -c -v"'
 	  local test_options = "" --  -s
 	  local run_tests = string.format("%s %s %s %s %s", testngpp_runner, test_dlls, listener_dirs, listeners, test_options)
@@ -110,8 +112,8 @@ local target_name = "Test"..module_name
 	  targetdir (target_dir)
 	  targetname (target_name)
 	  links { module_name, "testngpp", "mockcpp" }	  
-	  includedirs { "include", "../tools/testngpp/include", "../tools/mockcpp/include", "../tools/3rdparty"}
-	  libdirs { lib_dir, "../tools/testngpp/lib", "../tools/mockcpp/lib"}
+	  includedirs { "include", tool_dir.."/testngpp/include", tool_dir.."/mockcpp/include", tool_dir.."/3rdparty"}
+	  libdirs { lib_dir, tool_dir.."/testngpp/lib", tool_dir.."/mockcpp/lib" }
 	  objdir (obj_dir.."/Test"..module_name)	  
 	  
 	  -- ===========================================

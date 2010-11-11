@@ -71,3 +71,13 @@ FIXTURE(HelloWorld, base test)
     }
 };
 
+FIXTURE(HelloWorld2, ≤π≥‰)
+{
+    TEST(≤π≥‰≤‚ ‘1)
+    {
+    }
+    TEST(≤π≥‰≤‚ ‘2)
+    {
+    }
+
+};
