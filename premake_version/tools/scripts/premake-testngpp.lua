@@ -10,7 +10,7 @@
 
 if not _ACTION then return end
 
-print("Generate test files ...")
+print("Generating test files ...")
 
 local path_offset = path.getrelative(os.getcwd(), cwd).."/"  -- because the processed file path is relative to this premake-testngpp.lua path
 
@@ -20,7 +20,7 @@ function modify_path(path)
 	end
 end
 
-tool_dir = "../"..tool_dir
+tool_dir = path_offset..tool_dir
 modify_path(include_dirs)
 modify_path(librarys_dirs)
 modify_path(src_files_dirs)
@@ -105,21 +105,17 @@ local target_name = "Test"..module_name
 	  local run_tests = string.format("%s %s %s %s %s", testngpp_runner, test_dlls, listener_dirs, listeners, test_options)
 	  return run_tests
    end
-   
-    function get_paths(dir_list, files)
-		if dir_list == nil then
-			return ""
+	
+	function process_items (process, dirs)
+		for _, v in ipairs(dirs) do 
+			process {v} 
 		end
-		
-		local paths = ""		
-		for _, v in ipairs(dir_list) do
-			paths = paths..string.format ("%s", v)
-			if files ~= "" then
-				paths = paths..string.format ("/%s", files)
-			end
-				paths = paths..string.format (",")
-			end
-		return string.sub(paths, 1, -2)  -- remove the last ","
+	end
+	
+	function process_files (process, dirs, files)
+		for _, v in ipairs(dirs) do 
+			process {v.."/"..files} 
+		end
 	end
 
    solution (module_name)
@@ -131,9 +127,10 @@ local target_name = "Test"..module_name
    project (module_name)
       location (build_dir)
       kind "StaticLib"
-      files { get_paths(src_files_dirs, "**.cpp"), get_paths(include_dirs, "**.h")}  
+	  process_files(files, src_files_dirs, "**.cpp")
+	  process_files(files, include_dirs, "**.h")
 	  targetdir (lib_dir)
-	  includedirs { get_paths(include_dirs, "") }
+	  process_items(includedirs, include_dirs)
 	  objdir (obj_dir.."/"..module_name)
 	  
 	  configuration {"windows"}
@@ -148,13 +145,16 @@ local target_name = "Test"..module_name
 	  -- ===========================================
 	  -- project configuration
       kind "SharedLib"
-      files {test_dir.."/**.cpp", test_dir.."/**.cxx", get_paths(test_files_dirs, "**.h")}
+      files {test_dir.."/**.cpp", test_dir.."/**.cxx"}
+	  process_files(files, test_files_dirs, "**.h")
 	  targetdir (target_dir)
 	  targetname (target_name)
 	  links { module_name, "testngpp", "mockcpp" }	  
-	  if librarys ~= nil then links {get_paths(librarys, "")} end  -- or else can not link no name ".lib"
-	  includedirs { tool_dir.."/testngpp/include", tool_dir.."/mockcpp/include", tool_dir.."/3rdparty", get_paths(include_dirs, "") }
+	  process_items(links, librarys)
+	  includedirs { tool_dir.."/testngpp/include", tool_dir.."/mockcpp/include", tool_dir.."/3rdparty"}
+	  process_items(includedirs, include_dirs)
 	  libdirs { lib_dir, tool_dir.."/testngpp/lib", tool_dir.."/mockcpp/lib" }
+	  process_items(libdirs, librarys_dirs)
 	  objdir (obj_dir.."/Test"..module_name)	  
 	  
 	  -- ===========================================

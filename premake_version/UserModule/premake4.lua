@@ -14,9 +14,9 @@
 module_name     = "UserModule"
 tool_dir        = "../tools"
 
--- define the user's include dir and librarys. (replace nil with {"something", "otherthing"})
+-- define the user's include dir and librarys. (eg: {"something", "otherthing"})
 include_dirs    = {"include"}
-librarys        = nil
+librarys        = {}
 librarys_dirs   = {}
 
 -- define .cpp/test files search path (it will search recursively)
@@ -24,6 +24,4 @@ src_files_dirs  = {"src"}
 test_files_dirs = {"test"}
 
 cwd = os.getcwd()
-dofile("../tools/scripts/premake-testngpp.lua")
-
-   
+dofile(tool_dir.."/scripts/premake-testngpp.lua")
