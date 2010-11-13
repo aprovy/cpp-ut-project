@@ -204,8 +204,10 @@ function replace(file, class)
 	replace_class(file, class, string.upper)
 	
 	local dir = path.getdirectory(file)
+	local currentdir = os.getcwd()
 	os.chdir(dir) -- must chdir first
 	os.execute("del sed*") -- Warning: del temp file, may del some usefull file start with sed
+	os.chdir(currentdir)
 end
 
 ---------------------------------
