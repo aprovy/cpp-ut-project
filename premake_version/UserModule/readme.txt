@@ -15,7 +15,7 @@ User Guide
 
 4 Open the .sln/vcproj with Visual Studio 2005 in project dir.
 
-3 Install PowerShell. (If you want to use add class/test function, you need it.)
+5 You can also create .h/.cpp/test file for class/feature conveniently, run "premake4 --usage addfile" to show more.
 
 
 premake VS. cmake
