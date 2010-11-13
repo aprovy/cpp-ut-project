@@ -3,7 +3,7 @@
 
 #include <UserModule/HelloWorld.h>
 
-FIXTURE(IT_HelloWorld, base test)
+FIXTURE(SampleFeatureTest, base test)
 {
 	TEST(empty test)
 	{
