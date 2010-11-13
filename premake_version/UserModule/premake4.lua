@@ -12,7 +12,7 @@
 
 -- change the module name by yourself
 module_name     = "UserModule"
-tool_dir        = "../tools"
+tools_dir       = "../tools"
 
 -- define the user's include dir and librarys. (eg: {"something", "otherthing"})
 include_dirs    = {"include"}
@@ -24,4 +24,10 @@ src_files_dirs  = {"src"}
 test_files_dirs = {"test"}
 
 cwd = os.getcwd()
-dofile(tool_dir.."/scripts/premake-testngpp.lua")
+
+dofile(tools_dir.."/scripts/addclass.lua")
+
+if _ACTION == "addclass" or _ACTION == "addtest" then return end
+
+dofile(tools_dir.."/scripts/testngpp.lua")
+

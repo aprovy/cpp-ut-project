@@ -2,13 +2,13 @@
 #include <mockcpp/mockcpp.hpp>
 #include <mem_checker/interface_4user.h>
 
-#include <BtsLoader/HelloWorld.h>
+#include <UserModule/ClassName.h>
 
 USING_TESTNGPP_NS
 USING_MOCKCPP_NS
-USING_BTSLOADER_NS
+USING_USERMODULE_NS
 
-FIXTURE(HelloWorld, base test)
+FIXTURE(TestClassName, fixture description)
 {
 	SETUP()
 	{
@@ -18,8 +18,8 @@ FIXTURE(HelloWorld, base test)
 	{
 	}
 	
-	TEST(1 + 2 => 3)
+	TEST(test case description)
 	{
-	    ASSERT_EQ(3, add(1, 2));
+	    INFO("Add test code here, please!");
 	}
 };

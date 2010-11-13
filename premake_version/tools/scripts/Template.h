@@ -1,18 +1,18 @@
-#ifndef __HELLOWORLD_H__
-#define __HELLOWORLD_H__
+#ifndef __CLASSNAME_H__
+#define __CLASSNAME_H__
 
-#include <BtsLoader/BtsLoader.h>
+#include <UserModule/UserModule.h>
 
-BTSLOADER_NS_START
+USERMODULE_NS_START
 
 
-struct HelloWorld
+struct ClassName
 {
-    HelloWorld();
-    virtual ~HelloWorld(){}
+    ClassName();
+    virtual ~ClassName(){}
 };
 
 
-BTSLOADER_NS_END
+USERMODULE_NS_END
 
 #endif

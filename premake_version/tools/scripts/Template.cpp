@@ -1,13 +1,13 @@
-#include <BtsLoader/HelloWorld.h>
+#include <UserModule/ClassName.h>
 
-BTSLOADER_NS_START
+USERMODULE_NS_START
 
-HelloWorld::HelloWorld()
+ClassName::ClassName()
 {
 }
 
 
-BTSLOADER_NS_END
+USERMODULE_NS_END
 
 
 

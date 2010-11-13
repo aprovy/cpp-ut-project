@@ -20,7 +20,7 @@ function modify_path(path)
 	end
 end
 
-tool_dir = path_offset..tool_dir
+local tool_dir = path_offset..tools_dir
 modify_path(include_dirs)
 modify_path(librarys_dirs)
 modify_path(src_files_dirs)
