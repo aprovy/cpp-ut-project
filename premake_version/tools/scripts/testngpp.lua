@@ -136,7 +136,7 @@ local target_name = "Test"..module_name
 	  configuration {"windows"}
 	    buildoptions { "/MDd" }
  
-   project ("Test"..module_name)
+   project (module_name.."Test")
       location (build_dir)
 	  -- ===========================================
 	  -- generate cpp file for each test .h file, and register it as prebuildcommand.
