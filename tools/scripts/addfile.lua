@@ -104,7 +104,10 @@ end
 
 -- put temp files in "drive_root/addfile_temp"
 function get_temp_dir()
-	return path.getdrive(path.getabsolute(tools_dir))..":/addfile_temp/"
+	if os.get() == "windows" then 
+		return path.getdrive(path.getabsolute(tools_dir))..":/addfile_temp/"
+	end
+	return tools_dir.."/../addfile_temp/"
 end
 
 function make_dir(dir)
