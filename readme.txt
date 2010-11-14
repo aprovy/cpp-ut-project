@@ -5,29 +5,38 @@
 User Guide
 ========== 
   
-  This is a C/C++ ut/it/st sample project, using testngpp,mockcpp and premake. It aims at making C/C++ test harmless and full of fun. With it, you can add file/tests easily, can compile and run in only one script. You can use this project following these steps.
+  This is a C/C++ test sample project, using testngpp, mockcpp and premake. It aims at making C/C++ test harmless and full of fun. 
+  
+  This project not only can generate project files, but also can create .h/.cpp/test files for class/feature, run "premake4 --usage addfile" to show more.
 
-1 Compile testngpp and mockcpp, put the installed files in tools, see also the structure of dir.
+  Before you use this project, be sure about that you have compiled testngpp and mockcpp, and have put the installed files in tools, see also the structure of dir.
+  
+  And then you can use this project following these steps.  
+  
+Windows
+-------  
+1 Run cmd, change to the UserModule dir, run "premake4 vs2005".
 
-2 Download premake.(one exe file around 200 bytes.)
+2 Change to ../build/vs2005 dir, use the .sln/vcproj.
 
-3 Run cmd, change to the UserModule dir, run "premake4 vs2005".
+Linux
+-----
+1 Install premake.
 
-4 Open the .sln/vcproj with Visual Studio 2005 in project dir.
+2 Run cmd, change to the UserModule dir, run "premake4 gmake".
 
-5 You can also create .h/.cpp/test file for class/feature conveniently, run "premake4 --usage addfile" to show more.
-
+3 Change to ../build/gmake dir, run "make all".
 
 premake VS. cmake
 =================
 
 1 premake can add all the *.cpp/*.h to vcproj easily, it's very usefull for editing.
 
-2 premake and can be used on machines without compilers installed. (sometimes, cmake report unintelligible errors about compiler.)
+2 premake can be used on machines without compilers installed. (sometimes, cmake report unintelligible errors about compiler.)
 
-3 premake use lua language to write the script.
+3 premake use lua language to write the script. (lua is simple and powerfull.)
 
-4 premake is much smaller.
+4 premake is much smaller. (one exe file around 200 bytes.)
 
 5 premake also can be used on many platforms, such as linux/Mac OS etc., and it seems that premake support 64 bit platform much better.
 
@@ -46,13 +55,11 @@ testngpp : http://code.google.com/p/test-ng-pp/
 
 mockcpp  : http://code.google.com/p/mockcpp/
 
-premake    : http://industriousone.com/premake
+premake  : http://industriousone.com/premake
 
 
 The directory structure of cpp-ut-project :
 
-D:.
-©À©¤project
 ©À©¤tools
 ©¦  ©À©¤3rdparty
 ©¦  ©¦  ©À©¤boost
