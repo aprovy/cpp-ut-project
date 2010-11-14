@@ -31,9 +31,7 @@ test_files_dirs = {"test"}
 
 cwd = os.getcwd()
 
+dofile("tools.lua")
 dofile(tools_dir.."/scripts/addfile.lua")
-
 if _ACTION == "addfile" then return end
-
 dofile(tools_dir.."/scripts/testngpp.lua")
-
