@@ -1,8 +1,0 @@
-
-SET(MODULE_NAME UserModule)
-SET(PACKAGE_NAME \"${MODULE_NAME}\")
-SET(PACKAGE_STRING \"${MODULE_NAME}\")
-SET(PACKAGE_BUGREPORT \"sinojelly@gmail.com\")
-SET(PACKAGE_URL \"http://code.google.com/p/cpp-ut-project\")
-SET(PACKAGE \"${MODULE_NAME}\")
-SET(VERSION \"0.1\")
