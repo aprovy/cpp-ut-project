@@ -33,6 +33,6 @@ cwd = os.getcwd()
 
 dofile("tools.lua")
 dofile(tools_dir.."/scripts/addfile.lua")
-dofile(tools_dir.."/scripts/install.lua")
-if _ACTION == "addfile" or _ACTION == "install" then return end
+dofile(tools_dir.."/scripts/release.lua")
+if _ACTION == "addfile" or _ACTION == "release" then return end
 dofile(tools_dir.."/scripts/testngpp.lua")
