@@ -86,27 +86,51 @@ end
 local path_offset = "" -- path.getrelative(os.getcwd(), cwd).."/"
 
 function get_h_dir()
-	if not include_dirs[1] then
-		error("ERROR: no include_dirs specified.")
-		return ""
-	end
+	assert(include_dirs[1], "ERROR: no include_dirs specified.")
 	return path_offset..include_dirs[1].."/"..module_name.."/"
 end
 
 function get_cpp_dir()
-	if not src_files_dirs[1] then
-		error("ERROR: no src_files_dirs specified.")
-		return ""
-	end
+	assert(src_files_dirs[1], "ERROR: no src_files_dirs specified.")
 	return path_offset..src_files_dirs[1].."/"
 end
 
 function get_test_dir()
-	if not test_files_dirs[1] then
-		error("ERROR: no test_files_dirs specified.")
-		return ""
-	end
+	assert(test_files_dirs[1], "ERROR: no test_files_dirs specified.")
 	return path_offset..test_files_dirs[1].."/"
+end
+
+---------------------------------
+
+-- put temp files in "drive_root/addfile_temp"
+function get_temp_dir()
+	return path.getdrive(path.getabsolute(tools_dir))..":/addfile_temp/"
+end
+
+function make_dir(dir)
+	if os.isdir(dir) then return end
+	os.mkdir(dir)
+end
+
+function get_temp_h_dir()
+	assert(include_dirs[1], "ERROR: no include_dirs specified.")
+	local dir = get_temp_dir()..include_dirs[1].."/"..module_name.."/"
+	make_dir(dir)
+	return dir
+end
+
+function get_temp_cpp_dir()
+	assert(src_files_dirs[1], "ERROR: no src_files_dirs specified.")
+	local dir = get_temp_dir()..src_files_dirs[1].."/"
+	make_dir(dir)
+	return dir
+end
+
+function get_temp_test_dir()
+	assert(test_files_dirs[1], "ERROR: no test_files_dirs specified.")
+	local dir = get_temp_dir()..test_files_dirs[1].."/"
+	make_dir(dir)
+	return dir
 end
 
 ---------------------------------
@@ -135,6 +159,20 @@ end
 
 function get_test_file_path(class)
 	return get_test_dir()..get_test_file_name(class)
+end
+
+---------------------------------
+
+function get_temp_h_file_path(class)
+	return get_temp_h_dir()..get_h_file_name(class)
+end
+
+function get_temp_cpp_file_path(class)
+	return get_temp_cpp_dir()..get_cpp_file_name(class)
+end
+
+function get_temp_test_file_path(class)
+	return get_temp_test_dir()..get_test_file_name(class)
 end
 
 ---------------------------------
@@ -202,60 +240,71 @@ function replace(file, class)
 	
 	replace_class(file, class, original)
 	replace_class(file, class, string.upper)
-	
-	local dir = path.getdirectory(file)
-	local currentdir = os.getcwd()
-	os.chdir(dir) -- must chdir first
-	os.execute("del sed*") -- Warning: del temp file, may del some usefull file start with sed
-	os.chdir(currentdir)
 end
 
 ---------------------------------
 
-function modify_h_file(class)
-	replace(get_h_file_path(class), class)
+function modify_temp_h_file(class)
+	replace(get_temp_h_file_path(class), class)
 end
 
-function modify_cpp_file(class)
-	replace(get_cpp_file_path(class), class)
+function modify_temp_cpp_file(class)
+	replace(get_temp_cpp_file_path(class), class)
 end
 
-function modify_test_file(class)
-	replace(get_test_file_path(class), class)
+function modify_temp_test_file(class)
+	replace(get_temp_test_file_path(class), class)
+end
+
+---------------------------------
+
+function copy_temp_h_file(class)
+	os.copyfile(get_h_template_path(), get_temp_h_file_path(class))	
+end
+
+function copy_temp_cpp_file(class)
+	os.copyfile(get_cpp_template_path(), get_temp_cpp_file_path(class))
+end
+
+function copy_temp_test_file(class)
+	os.copyfile(get_test_template_path(), get_temp_test_file_path(class))
 end
 
 ---------------------------------
 
 function copy_h_file(class)
-	os.copyfile(get_h_template_path(), get_h_file_path(class))
+	os.copyfile(get_temp_h_file_path(class), get_h_file_path(class))	
 	print("add "..get_h_file_path(class))
 end
 
 function copy_cpp_file(class)
-	os.copyfile(get_cpp_template_path(), get_cpp_file_path(class))
+	os.copyfile(get_temp_cpp_file_path(class), get_cpp_file_path(class))
 	print("add "..get_cpp_file_path(class))
 end
 
 function copy_test_file(class)
-	os.copyfile(get_test_template_path(), get_test_file_path(class))
+	os.copyfile(get_temp_test_file_path(class), get_test_file_path(class))
 	print("add "..get_test_file_path(class))
 end
 
 ---------------------------------
 
 function create_h_file(class)
+	copy_temp_h_file(class)
+	modify_temp_h_file(class)
 	copy_h_file(class)
-	modify_h_file(class)
 end
 
 function create_cpp_file(class)
+	copy_temp_cpp_file(class)
+	modify_temp_cpp_file(class)
 	copy_cpp_file(class)
-	modify_cpp_file(class)
 end
 
 function create_test_file(class)
+	copy_temp_test_file(class)
+	modify_temp_test_file(class)
 	copy_test_file(class)
-	modify_test_file(class)
 end
 
 ---------------------------------
