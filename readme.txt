@@ -21,7 +21,7 @@ Windows
 
 Linux
 -----
-1 Install premake.
+1 Install premake4.
 
 2 Run cmd, change to the UserModule dir, run "premake4 gmake".
 
