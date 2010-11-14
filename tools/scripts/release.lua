@@ -5,6 +5,12 @@
 local release_dir = "../cpp-ut-project-release/"
 local root_dir = ".."
 
+
+if os.get() == "windows" then
+	release_dir = "D:/tools_release/cpp-ut-project-release/"
+end
+
+
 function get_sep()
 	local sep = "/"
 	if os.get() == "windows" then
