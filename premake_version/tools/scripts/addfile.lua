@@ -277,23 +277,28 @@ end
 
 ---------------------------------
 
+function add_class_files(class)
+	  if not is_class() then return end
+  	  add_h_file(class)
+	  add_cpp_file(class)
+	  add_test_file(class)
+end
+
+function add_feature_test(feature)
+	  if not is_feature() then return end
+	  add_test_file(feature)
+end
+
+---------------------------------
+
 newaction {
    trigger     = "addfile",
    description = "Add .h/.cpp/test files for class/feature(use --usage to show help)",
    execute = function ()
 	  if usage() then return end
 
-	  if is_class() then
-	     add_h_file(class_name())
-	     add_cpp_file(class_name())
-	     add_test_file(class_name())
-		 return
-	  end
-	  
-	  if is_feature() then
-	     add_test_file(feature_name())
-		 return
-	  end
+	  add_class_files(class_name())
+	  add_feature_test(feature_name())
 	  
 	  error("ERROR: no class name or feature name specified!")
    end
