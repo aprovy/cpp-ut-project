@@ -20,6 +20,6 @@ FIXTURE(TestClassName, fixture description)
 	
 	TEST(test case description)
 	{
-	    INFO("Add test code here, please!");
+	    FAIL("Replace this line with your test code, please!");
 	}
 };

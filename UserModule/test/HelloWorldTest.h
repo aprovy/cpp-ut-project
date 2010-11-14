@@ -1,7 +1,7 @@
 #include <testngpp/testngpp.hpp>
 #include <mockcpp/mokc.h>
-#include <mem_checker/interface_4user.h>
 #include <mockcpp/mockcpp.hpp>
+#include <mem_checker/interface_4user.h>
 
 #include <UserModule/HelloWorld.h>
 
@@ -34,7 +34,6 @@ FIXTURE(HelloWorld, base test)
 		ASSERT_EQ(200, add(1, 2));
 
         GlobalMockObject::verify();
-        //GlobalMockObject::reset();
 	}
 
     TEST(mockcpp mock object test)
@@ -44,7 +43,6 @@ FIXTURE(HelloWorld, base test)
             .will(returnValue(3));
         ASSERT_EQ(3, mocker->func());
         mocker.verify();
-        //mocker.reset();
     }
 
     // @test(id = parent1)
