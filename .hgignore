@@ -4,3 +4,4 @@ syntax: regexp
 ^tools/mockcpp/
 ^tools/testngpp/
 ^build/
+^cpp-ut-project-install/
