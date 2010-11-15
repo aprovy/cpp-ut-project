@@ -16,7 +16,7 @@
 module_name     = "UserModule"
 
 -- define the tools dir
-tools_dir       = "../tools"
+tools_dir       = "../../tools"
 
 -- define the user's include dir and librarys. (eg: {"something", "otherthing"})
 -- action addfile will add .h file to the first include dir.
@@ -29,10 +29,11 @@ librarys_dirs   = {}
 src_files_dirs  = {"src"}
 test_files_dirs = {"test"}
 
-cwd = os.getcwd()
+module_dir = os.getcwd()
 
-dofile("tools.lua")
-dofile(tools_dir.."/scripts/addfile.lua")
-dofile(tools_dir.."/scripts/release.lua")
+
+dofile(path.join(module_dir, "tools.lua"))
+dofile(path.join(tools_dir, "scripts/addfile.lua"))
+dofile(path.join(tools_dir, "scripts/release.lua"))
 if _ACTION == "addfile" or _ACTION == "release" then return end
-dofile(tools_dir.."/scripts/testngpp.lua")
+dofile(path.join(tools_dir, "scripts/testngpp.lua"))
