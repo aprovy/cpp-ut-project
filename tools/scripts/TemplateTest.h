@@ -8,7 +8,7 @@ USING_TESTNGPP_NS
 USING_MOCKCPP_NS
 USING_USERMODULE_NS
 
-FIXTURE(TestClassName, fixture description)
+FIXTURE(ClassNameTest, fixture description)
 {
 	SETUP()
 	{

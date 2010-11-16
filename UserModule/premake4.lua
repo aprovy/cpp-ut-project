@@ -18,6 +18,9 @@ module_name     = "UserModule"
 -- define the tools dir
 tools_dir       = "../tools"
 
+-- define the build dir
+build_dir       = "../build"
+
 -- define the user's include dir and librarys. (eg: {"something", "otherthing"})
 -- action addfile will add .h file to the first include dir.
 include_dirs    = {"include"}

@@ -15,7 +15,7 @@ print("Generating test files ...")
 
 local current_offset = path.getrelative(os.getcwd(), module_dir).."/"  -- because the processed file path is relative to this premake-testngpp.lua path
 
-local build_dir   = current_offset.."../build/".._ACTION
+local build_dir   = current_offset..build_dir.."/".._ACTION
 local build_offset = path.getrelative(build_dir, module_dir).."/"
 
 function modify_path(path, offset)
