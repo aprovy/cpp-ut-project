@@ -169,6 +169,9 @@ local target_name = module_name.."Test"
       location (build_dir)
       kind "StaticLib"
 	  process_files(files, src_files_dirs, "**.cpp")
+	  process_files(files, src_files_dirs, "**.cxx")
+	  process_files(files, src_files_dirs, "**.c")
+	  process_files(files, include_dirs, "**.hpp")
 	  process_files(files, include_dirs, "**.h")
 	  targetdir (lib_dir)
 	  process_items(includedirs, include_dirs)
