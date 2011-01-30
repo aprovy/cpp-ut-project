@@ -175,6 +175,7 @@ local target_name = module_name.."Test"
 	  process_files(files, include_dirs, "**.h")
 	  targetdir (lib_dir)
 	  process_items(includedirs, include_dirs)
+	  process_items(defines, user_defines)
 	  objdir (obj_dir.."/"..module_name)
 	  
 	  configuration {"windows"}

@@ -24,6 +24,7 @@ build_dir       = "../build"
 -- define the user's include dir and librarys. (eg: {"something", "otherthing"})
 -- action addfile will add .h file to the first include dir.
 include_dirs    = {"include"}
+user_defines    = {}
 librarys        = {}
 librarys_dirs   = {}
 
