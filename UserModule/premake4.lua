@@ -21,6 +21,9 @@ tools_dir       = "../tools"
 -- define the build dir
 build_dir       = "../build"
 
+-- define source dir name
+src_dir_name    = "src"
+
 -- define the user's include dir and librarys. (eg: {"something", "otherthing"})
 -- action addfile will add .h file to the first include dir.
 include_dirs    = {"include"}
@@ -30,7 +33,7 @@ librarys_dirs   = {}
 
 -- define .cpp/test files search path (it will search recursively)
 -- action addfile will add .cpp/test file to the first src/test dir.
-src_files_dirs  = {"src"}
+src_files_dirs  = {src_dir_name}
 test_files_dirs = {"test"}
 
 module_dir = os.getcwd()
@@ -40,4 +43,4 @@ dofile(path.join(module_dir, "tools.lua"))
 dofile(path.join(tools_dir, "scripts/addfile.lua"))
 dofile(path.join(tools_dir, "scripts/release.lua"))
 if _ACTION == "addfile" or _ACTION == "release" then return end
-dofile(path.join(tools_dir, "scripts/testngpp.lua"))
+dofile(path.join(tools_dir, "scripts/project.lua"))

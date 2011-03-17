@@ -165,7 +165,7 @@ local target_name = module_name.."Test"
       location (build_dir)
 	  flags { "Symbols" }
  
-   project (module_name)
+   project (module_name)  -- this project is only for test. and it used mem checker module.
       location (build_dir)
       kind "StaticLib"
 	  process_files(files, src_files_dirs, "**.cpp")
@@ -176,10 +176,11 @@ local target_name = module_name.."Test"
 	  targetdir (lib_dir)
 	  process_items(includedirs, include_dirs)
 	  process_items(defines, user_defines)
-	  objdir (obj_dir.."/"..module_name)
+	  objdir (obj_dir.."/"..module_name)	  
 	  
 	  configuration {"windows"}
-	    buildoptions { "/MDd" }
+	    includedirs { tool_dir.."/3rdparty" } -- support include mem checker header file.
+	    buildoptions { "/MDd", "/FI \"crtdbg.h\" /FI \"xdebug\" /FI \"xlocale\" /FI \"mem_checker/interface_4user.h\"" }
  
    project (module_name.."Test")
       location (build_dir)
@@ -209,7 +210,7 @@ local target_name = module_name.."Test"
 	  -- ===========================================
 	  -- configuration for special platform
 	  configuration {"windows"}
-	    buildoptions { "/Zm1000", "/vmg", "/MDd" }
+	    buildoptions { "/Zm1000", "/vmg", "/MDd", "/FI \"crtdbg.h\" /FI \"xdebug\" /FI \"xlocale\" /FI \"mem_checker/interface_4user.h\"" }
 	    defines { "WIN32", "_WINDOWS", "_DEBUG", "MSVC_VMG_ENABLED"}
 	    linkoptions { "/DEBUG"}	  
 	    flags { "NoManifest" } 
