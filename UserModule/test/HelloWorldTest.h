@@ -1,7 +1,6 @@
 #include <testngpp/testngpp.hpp>
 #include <mockcpp/mokc.h>
 #include <mockcpp/mockcpp.hpp>
-#include <mem_checker/interface_4user.h>
 
 #include <UserModule/HelloWorld.h>
 
