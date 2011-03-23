@@ -178,10 +178,10 @@ local target_name = module_name.."Test"
 	  process_items(defines, user_defines)
 	  objdir (obj_dir.."/"..module_name)	  
 	
-          includedirs { tool_dir.."/3rdparty" } -- support include mem checker header file.
-          
-          configuration {"gmake"}
-            buildoptions { "-include \"mem_checker/interface_4user.h\""}
+	  includedirs { tool_dir.."/3rdparty" } -- support include mem checker header file.
+	  
+	  configuration {"gmake"}
+		buildoptions { "-include \"mem_checker/interface_4user.h\""}
 
 	  configuration {"vs*"}	    
 	    buildoptions { "/MDd", "/FI \"mem_checker/interface_4user.h\"" }
@@ -213,7 +213,7 @@ local target_name = module_name.."Test"
 
 	  -- ===========================================
 	  -- configuration for special platform
-          configuration {"gmake"}
+      configuration {"gmake"}
 	    buildoptions { "-include \"mem_checker/interface_4user.h\""}
 
 	  configuration {"vs*"}
