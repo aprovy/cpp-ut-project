@@ -177,10 +177,14 @@ local target_name = module_name.."Test"
 	  process_items(includedirs, include_dirs)
 	  process_items(defines, user_defines)
 	  objdir (obj_dir.."/"..module_name)	  
-	  
-	  configuration {"windows"}
-	    includedirs { tool_dir.."/3rdparty" } -- support include mem checker header file.
-	    buildoptions { "/MDd", "/FI \"crtdbg.h\" /FI \"xdebug\" /FI \"xlocale\" /FI \"mem_checker/interface_4user.h\"" }
+	
+          includedirs { tool_dir.."/3rdparty" } -- support include mem checker header file.
+          
+          configuration {"gmake"}
+            buildoptions { "-include \"mem_checker/interface_4user.h\""}
+
+	  configuration {"vs*"}	    
+	    buildoptions { "/MDd", "/FI \"mem_checker/interface_4user.h\"" }
  
    project (module_name.."Test")
       location (build_dir)
@@ -206,11 +210,14 @@ local target_name = module_name.."Test"
 	  -- ===========================================
 	  -- run tests
 	  postbuildcommands { run_tests() }
-	  
+
 	  -- ===========================================
 	  -- configuration for special platform
-	  configuration {"windows"}
-	    buildoptions { "/Zm1000", "/vmg", "/MDd", "/FI \"crtdbg.h\" /FI \"xdebug\" /FI \"xlocale\" /FI \"mem_checker/interface_4user.h\"" }
+          configuration {"gmake"}
+	    buildoptions { "-include \"mem_checker/interface_4user.h\""}
+
+	  configuration {"vs*"}
+	    buildoptions { "/Zm1000", "/vmg", "/MDd", "/FI \"mem_checker/interface_4user.h\"" }
 	    defines { "WIN32", "_WINDOWS", "_DEBUG", "MSVC_VMG_ENABLED"}
 	    linkoptions { "/DEBUG"}	  
 	    flags { "NoManifest" } 
