@@ -9,6 +9,7 @@
 --
 
 if not _ACTION then return end
+if _ACTION == "clean" then return end
 
 print("Generating test files ...")
 
