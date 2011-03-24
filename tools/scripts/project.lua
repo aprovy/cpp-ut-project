@@ -158,6 +158,14 @@ local target_name = module_name.."Test"
 			process {v.."/"..files} 
 		end
 	end
+		
+	function include_memcheck_header(need_path, force_include)
+	    if _OPTIONS["nomemcheck"] then return end
+	    if need_path then 
+		    includedirs { tool_dir.."/3rdparty" } -- support include mem checker header file.
+		end
+		buildoptions { force_include.." \"mem_checker/interface_4user.h\""}
+	end
 
    solution (module_name)
       configurations { "Debug", "Release" }
@@ -177,14 +185,13 @@ local target_name = module_name.."Test"
 	  process_items(includedirs, include_dirs)
 	  process_items(defines, user_defines)
 	  objdir (obj_dir.."/"..module_name)	  
-	
-	  includedirs { tool_dir.."/3rdparty" } -- support include mem checker header file.
 	  
 	  configuration {"gmake"}
-		buildoptions { "-include \"mem_checker/interface_4user.h\""}
+	    include_memcheck_header(true, "-include")
 
 	  configuration {"vs*"}	    
-	    buildoptions { "/MDd", "/FI \"mem_checker/interface_4user.h\"" }
+	    buildoptions { "/MDd" }
+		include_memcheck_header(true, "/FI")
  
    project (module_name.."Test")
       location (build_dir)
@@ -214,10 +221,11 @@ local target_name = module_name.."Test"
 	  -- ===========================================
 	  -- configuration for special platform
       configuration {"gmake"}
-	    buildoptions { "-include \"mem_checker/interface_4user.h\""}
+		include_memcheck_header(false, "-include")
 
 	  configuration {"vs*"}
-	    buildoptions { "/Zm1000", "/vmg", "/MDd", "/FI \"mem_checker/interface_4user.h\"" }
+	    include_memcheck_header(false, "/FI")
+	    buildoptions { "/Zm1000", "/vmg", "/MDd" }
 	    defines { "WIN32", "_WINDOWS", "_DEBUG", "MSVC_VMG_ENABLED"}
 	    linkoptions { "/DEBUG"}	  
 	    flags { "NoManifest" } 

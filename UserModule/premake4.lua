@@ -42,5 +42,6 @@ module_dir = os.getcwd()
 dofile(path.join(module_dir, "tools.lua"))
 dofile(path.join(tools_dir, "scripts/addfile.lua"))
 dofile(path.join(tools_dir, "scripts/release.lua"))
+dofile(path.join(tools_dir, "scripts/options.lua"))
 if _ACTION == "addfile" or _ACTION == "release" then return end
 dofile(path.join(tools_dir, "scripts/project.lua"))
