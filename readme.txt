@@ -1,5 +1,5 @@
 
-           cpp-ut-project Introduction
+           cpp-ut-project Introduction ( V1.1 )
 
 		   
 User Guide
@@ -15,7 +15,7 @@ User Guide
   
 Windows
 -------  
-1 Run cmd, change to the UserModule dir, run "premake4 vs2005".
+1 Run cmd, change to the UserModule dir, run "premake4 vs2005". (or use "premake4 --nomemcheck vs2005" to generate project without memchecker)
 
 2 Change to ../build/vs2005 dir, use the .sln/vcproj.
 
@@ -23,7 +23,7 @@ Linux
 -----
 1 Install premake4.
 
-2 Run cmd, change to the UserModule dir, run "premake4 gmake".
+2 Run cmd, change to the UserModule dir, run "premake4 gmake". (or use "premake4 --nomemcheck gmake" to generate project without memchecker)
 
 3 Change to ../build/gmake dir, run "make all".
 
