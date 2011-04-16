@@ -78,3 +78,17 @@ FIXTURE(HelloWorld2, ²¹³ä)
     }
 
 };
+
+FIXTURE(DataDrivenTest)
+{
+	DATA_PROVIDER( names, 1
+		, DATA_GROUP((const char*)"darwin") 
+		, DATA_GROUP((const char*)"arthur") 
+		, DATA_GROUP((const char*)"steven"));
+
+	// @test(data="names")
+	PTEST( (const char* name), this is a parametered() test)
+	{
+		INFO(name);
+	}
+};

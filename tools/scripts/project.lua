@@ -11,8 +11,20 @@
 if not _ACTION then return end
 if _ACTION == "clean" then return end
 
-print("Generating test files ...")
+local os_ver = os.getversion()
+print("Platform: "..os_ver.description.."   ".._ACTION)
+-- like : -windows7-vs2008
+local platform_suffix = "-"..string.lower(string.gsub(os_ver.description, " ", "")).."-".._ACTION
 
+function copy_right_file(file)
+	if os.isfile(file) then return end
+	local right_file = path.join(path.getdirectory(file), path.getbasename(file)..platform_suffix..path.getextension(file))
+	if not os.isfile(right_file) then
+		print("ERROR: "..right_file.." not exist!")
+		return
+	end
+	os.copyfile(right_file, file)
+end
 
 local current_offset = path.getrelative(os.getcwd(), module_dir).."/"  -- because the processed file path is relative to this premake-testngpp.lua path
 
@@ -82,10 +94,24 @@ local target_name = module_name.."Test"
 		return test_files
 	end
 	
+    -----------
+    function copy_all_right_files()
+	  if os.is("windows") then 
+		copy_right_file(tool_dir.."/mockcpp/lib/mockcpp.lib")
+		copy_right_file(tool_dir.."/testngpp/bin/testngpp-runner.exe")
+		copy_right_file(tool_dir.."/testngpp/bin/testngpp-win32-testcase-runner.exe")
+		copy_right_file(tool_dir.."/testngpp/lib/testngpp.lib")
+	  end
+	  -- linux or other os, may not need to use different lib/exe files on different platforms.
+    end
+	
    --
    -- generate cpp file for each test .h file.
    --
-   function generate_tests()  
+   function generate_tests()
+	  copy_all_right_files()
+	  
+      print("Generating test files ...")   
 	  local test_files = ""
 	  test_files = get_tests(test_files_dirs, "**.h")
 	  
