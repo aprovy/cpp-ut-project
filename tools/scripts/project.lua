@@ -101,6 +101,8 @@ local target_name = module_name.."Test"
 		copy_right_file(tool_dir.."/testngpp/bin/testngpp-runner.exe")
 		copy_right_file(tool_dir.."/testngpp/bin/testngpp-win32-testcase-runner.exe")
 		copy_right_file(tool_dir.."/testngpp/lib/testngpp.lib")
+		copy_right_file(tool_dir.."/testngpp/testngpp/listener/testngppstdoutlistener.dll")
+		copy_right_file(tool_dir.."/testngpp/testngpp/listener/testngppxmllistener.dll")
 	  end
 	  -- linux or other os, may not need to use different lib/exe files on different platforms.
     end
