@@ -39,7 +39,6 @@ test_files_dirs = {"test"}
 module_dir = os.getcwd()
 
 
-dofile(path.join(module_dir, "tools.lua"))
 dofile(path.join(tools_dir, "scripts/addfile.lua"))
 dofile(path.join(tools_dir, "scripts/release.lua"))
 dofile(path.join(tools_dir, "scripts/options.lua"))

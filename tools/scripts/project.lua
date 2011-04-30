@@ -48,7 +48,7 @@ test_files_dirs = modify_path(test_files_dirs, current_offset)
 
 local tool_dir_win = string.gsub(tool_dir, "/", "\\")
 local tool_dir_build_win = string.gsub(tool_dir_build, "/", "\\")
-local test_dir    = build_dir.."/test"
+local test_dir    = build_dir.."/temp"
 local target_dir  = build_dir.."/target"
 local lib_dir     = build_dir.."/lib"
 local obj_dir     = build_dir.."/obj"
