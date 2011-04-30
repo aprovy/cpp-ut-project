@@ -128,7 +128,7 @@ local target_name = module_name.."Test"
 	  end
 	  local file_encode = "-e gb2312 "
 	  local cpp_generated = "-d "..test_dir.." "	  
-	  local cpp_generated_build = "-d test "
+	  local cpp_generated_build = "-d "..test_dir.." "
 	  local cmdline = test_generator..file_encode..cpp_generated..test_files
 	  local cmdline_build = test_generator_build..file_encode..cpp_generated_build..test_files_build
 	  os.executef(cmdline) -- generate .cpp file at the first running, in order to include it in vcproj.
