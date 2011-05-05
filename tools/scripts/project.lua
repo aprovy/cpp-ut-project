@@ -26,7 +26,13 @@ function copy_right_file(file)
 	os.copyfile(right_file, file)
 end
 
-local current_offset = path.getrelative(os.getcwd(), module_dir).."/"  -- because the processed file path is relative to this premake-testngpp.lua path
+local build_dir_orig = build_dir
+
+local current_offset = path.getrelative(os.getcwd(), module_dir).."/"  -- because the processed file path is relative to this premake-project.lua path
+
+local vcproj_dir = module_dir.."/"..build_dir.."/".._ACTION
+local current_offset_vcproj = path.getrelative(vcproj_dir, module_dir).."/"  -- use as vcproj prebuild cmd
+local build_dir_vcproj   = current_offset_vcproj..build_dir.."/".._ACTION
 
 local build_dir   = current_offset..build_dir.."/".._ACTION
 local build_offset = path.getrelative(build_dir, module_dir).."/"
@@ -49,6 +55,7 @@ test_files_dirs = modify_path(test_files_dirs, current_offset)
 local tool_dir_win = string.gsub(tool_dir, "/", "\\")
 local tool_dir_build_win = string.gsub(tool_dir_build, "/", "\\")
 local test_dir    = build_dir.."/temp"
+local test_dir_vcproj = build_dir_vcproj.."/temp"
 local target_dir  = build_dir.."/target"
 local lib_dir     = build_dir.."/lib"
 local obj_dir     = build_dir.."/obj"
@@ -128,7 +135,7 @@ local target_name = module_name.."Test"
 	  end
 	  local file_encode = "-e gb2312 "
 	  local cpp_generated = "-d "..test_dir.." "	  
-	  local cpp_generated_build = "-d "..test_dir.." "
+	  local cpp_generated_build = "-d "..test_dir_vcproj.." "
 	  local cmdline = test_generator..file_encode..cpp_generated..test_files
 	  local cmdline_build = test_generator_build..file_encode..cpp_generated_build..test_files_build
 	  os.executef(cmdline) -- generate .cpp file at the first running, in order to include it in vcproj.

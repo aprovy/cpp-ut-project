@@ -20,6 +20,7 @@ tools_dir       = "../tools"
 
 -- define the build dir
 build_dir       = "../build"
+--build_dir       = "../build/"..module_name
 
 -- define source dir name
 src_dir_name    = "src"
