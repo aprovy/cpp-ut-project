@@ -26,8 +26,6 @@ function copy_right_file(file)
 	os.copyfile(right_file, file)
 end
 
-local build_dir_orig = build_dir
-
 local current_offset = path.getrelative(os.getcwd(), module_dir).."/"  -- because the processed file path is relative to this premake-project.lua path
 
 local vcproj_dir = module_dir.."/"..build_dir.."/".._ACTION
