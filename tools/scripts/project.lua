@@ -27,7 +27,7 @@ function copy_right_file(file)
     local action_file = path.join(path.getdirectory(file), path.getbasename(file)..action_suffix..path.getextension(file))
     if os.isfile(action_file) then os.copyfile(action_file, file) return end
      
-    print("ERROR: "..platform_file.." or "..action_file.." not exist!")
+    print("ERROR: no "..platform_file.." or "..action_file.." found!")
 end
 
 local current_offset = path.getrelative(os.getcwd(), module_dir).."/"  -- because the processed file path is relative to this premake-project.lua path
