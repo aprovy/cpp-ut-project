@@ -13,17 +13,21 @@ if _ACTION == "clean" then return end
 
 local os_ver = os.getversion()
 print("Platform: "..os_ver.description.."   ".._ACTION)
--- like : -windows7-vs2008
+-- like : -windows7-vs2008 for windows 7 + vs2008
+--     or -vs2008          for all windows os + vs2008
 local platform_suffix = "-"..string.lower(string.gsub(os_ver.description, " ", "")).."-".._ACTION
+local action_suffix   = "-".._ACTION
 
 function copy_right_file(file)
 	if os.isfile(file) then return end
-	local right_file = path.join(path.getdirectory(file), path.getbasename(file)..platform_suffix..path.getextension(file))
-	if not os.isfile(right_file) then
-		print("ERROR: "..right_file.." not exist!")
-		return
-	end
-	os.copyfile(right_file, file)
+     
+    local platform_file = path.join(path.getdirectory(file), path.getbasename(file)..platform_suffix..path.getextension(file))
+    if os.isfile(platform_file) then os.copyfile(platform_file, file) return end
+     
+    local action_file = path.join(path.getdirectory(file), path.getbasename(file)..action_suffix..path.getextension(file))
+    if os.isfile(action_file) then os.copyfile(action_file, file) return end
+     
+    print("ERROR: "..platform_file.." or "..action_file.." not exist!")
 end
 
 local current_offset = path.getrelative(os.getcwd(), module_dir).."/"  -- because the processed file path is relative to this premake-project.lua path
