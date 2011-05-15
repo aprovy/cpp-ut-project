@@ -107,9 +107,11 @@ local target_name = module_name.."Test"
     function copy_all_right_files()
 	  if os.is("windows") then 
 		copy_right_file(tool_dir.."/mockcpp/lib/mockcpp.lib")
+		copy_right_file(tool_dir.."/mockcpp/lib/mockcpp.pdb")
 		copy_right_file(tool_dir.."/testngpp/bin/testngpp-runner.exe")
 		copy_right_file(tool_dir.."/testngpp/bin/testngpp-win32-testcase-runner.exe")
 		copy_right_file(tool_dir.."/testngpp/lib/testngpp.lib")
+		copy_right_file(tool_dir.."/testngpp/lib/testngpp.pdb")
 		copy_right_file(tool_dir.."/testngpp/testngpp/listener/testngppstdoutlistener.dll")
 		copy_right_file(tool_dir.."/testngpp/testngpp/listener/testngppxmllistener.dll")
 	  end
