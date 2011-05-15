@@ -21,7 +21,7 @@ Windows
 
 Linux
 -----
-1 Install premake4.
+1 Install premake4.( Copy the file in tools/bin to /usr/local/bin)
 
 2 Run cmd, change to the UserModule dir, run "premake4 gmake". (or use "premake4 --nomemcheck gmake" to generate project without memchecker)
 
