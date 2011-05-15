@@ -11,6 +11,7 @@ function export_subdir($subdir)
 }
 
 export_subdir tools\scripts
+export_subdir tools\bin
 export_subdir UserModule
 
 xcopy readme.txt $dest_dir\
