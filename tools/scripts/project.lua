@@ -137,6 +137,10 @@ local target_name = module_name.."Test"
 	    test_generator = tool_dir_win.."\\testngpp\\bin\\testngppgen.exe "
 		test_generator_build = tool_dir_build_win.."\\testngpp\\bin\\testngppgen.exe "
 	  end
+	  if os.is("linux") then
+	    test_generator = tool_dir.."/testngpp/bin/testngppgen "
+		test_generator_build = tool_dir_build.."/testngpp/bin/testngppgen "
+	  end
 	  local file_encode = "-e gb2312 "
 	  local cpp_generated = "-d "..test_dir.." "	  
 	  local cpp_generated_build = "-d "..test_dir_vcproj.." "
